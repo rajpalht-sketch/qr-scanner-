@@ -1,0 +1,36 @@
+function onScanSuccess(text) {
+  const output = document.getElementById("output");
+  const title = document.getElementById("text");
+  const video = document.getElementById("video");
+  const overlay = document.getElementById("overlay");
+
+  // Flash effect
+  overlay.classList.remove("flash");
+  void overlay.offsetWidth; // restart animation
+  overlay.classList.add("flash");
+
+  // Show output area
+  output.style.display = "block";
+
+  // Show different surprises based on QR text
+  if (text === "A") {
+    title.innerHTML = "🔥 AWESOME 🔥";
+    video.src = "videoA.mp4";
+  } 
+  else if (text === "B") {
+    title.innerHTML = "✨ BRAVO ✨";
+    video.src = "videoB.mp4";
+  } 
+  else {
+    title.innerHTML = "😲 SECRET FOUND 😲";
+    video.src = "";
+  }
+}
+
+// Initialize the QR scanner
+const scanner = new Html5QrcodeScanner(
+  "reader",
+  { fps: 10, qrbox: 250 }
+);
+
+scanner.render(onScanSuccess);
